@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model College {
+  id            Int            @id @default(autoincrement())
+  name          String
+  location      String
+  city          String
+  state         String
+  fees          Int
+  rating        Float
+  established   Int
+  type          String
+  affiliation   String
+  totalStudents Int
+  imageUrl      String?
+  description   String
+  nirf          Int?
+  courses       Course[]
+  placements    Placement[]
+  reviews       Review[]
+  questions     Question[]
+  savedBy       SavedCollege[]
+  createdAt     DateTime       @default(now())
+}
+
+model Course {
+  id        Int     @id @default(autoincrement())
+  name      String
+  duration  String
+  fees      Int
+  seats     Int
+  exam      String
+  minRank   Int?
+  maxRank   Int?
+  college   College @relation(fields: [collegeId], references: [id])
+  collegeId Int
+}
+
+model Placement {
+  id            Int     @id @default(autoincrement())
+  year          Int
+  avgPackage    Float
+  maxPackage    Float
+  placementPct  Float
+  topRecruiters String
+  college       College @relation(fields: [collegeId], references: [id])
+  collegeId     Int
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Float
+  title     String
+  body      String
+  author    String
+  college   College  @relation(fields: [collegeId], references: [id])
+  collegeId Int
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  name          String
+  savedColleges SavedCollege[]
+  questions     Question[]
+  answers       Answer[]
+  createdAt     DateTime       @default(now())
+}
+
+model SavedCollege {
+  id        Int     @id @default(autoincrement())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  college   College @relation(fields: [collegeId], references: [id])
+  collegeId Int
+
+  @@unique([userId, collegeId])
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  title     String
+  body      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  college   College? @relation(fields: [collegeId], references: [id])
+  collegeId Int?
+  answers   Answer[]
+  createdAt DateTime @default(now())
+}
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  body       String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
+  createdAt  DateTime @default(now())
+}
