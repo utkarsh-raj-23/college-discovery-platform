@@ -2,9 +2,22 @@
 
 A full-stack production-grade college discovery and decision platform inspired by Careers360 and CollegeDunia. Built as part of a product execution internship assignment.
 
-🌐 **Live URL:** [https://your-app.vercel.app](https://your-app.vercel.app)
+## 🚀 Live Deployment
+
+| Service | URL |
+|---------|-----|
+| 🌐 Frontend (Vercel) | https://college-discovery-platform-amber.vercel.app |
+| ⚙️ Backend API (Railway) | https://college-discovery-platform-production-32e8.up.railway.app/api/colleges |
+| 🗄️ Database | PostgreSQL hosted on Neon.tech |
 
 ---
+
+## 🔗 Important Links
+
+- **Live App** → https://college-discovery-platform-amber.vercel.app
+- **GitHub Repo** → https://github.com/utkarsh-raj-23/college-discovery-platform
+- **Backend Health Check** → https://college-discovery-platform-production-32e8.up.railway.app/health
+- **API Colleges Endpoint** → https://college-discovery-platform-production-32e8.up.railway.app/api/colleges
 
 ## 🚀 Features
 
