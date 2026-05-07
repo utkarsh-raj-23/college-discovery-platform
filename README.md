@@ -2,6 +2,9 @@
 
 A full-stack production-grade college discovery and decision platform inspired by Careers360 and CollegeDunia. Built as part of a product execution internship assignment.
 
+## 📄 Research Document
+[View Full Research & Reverse Engineering Document](https://docs.google.com/document/d/1qHeS1OHQrcYYnqnO-q6IvukKuIMjwZlVAY35Fb57BhM/edit?usp=sharing)
+
 ## 🚀 Live Deployment
 
 | Service | URL |
