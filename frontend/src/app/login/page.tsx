@@ -1,4 +1,5 @@
 'use client';
+import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { login, register } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
@@ -16,19 +17,26 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async () => {
-    setError('');
-    setLoading(true);
-    try {
-      const data = isRegister
-        ? await register(name, email, password)
-        : await login(email, password);
-      setAuth(data.user, data.token);
-      router.push('/colleges');
-    } catch (e: any) {
-      setError(e.response?.data?.error || 'Something went wrong');
-    }
-    setLoading(false);
-  };
+  setError('');
+  setLoading(true);
+  try {
+    const data = isRegister
+      ? await register(name, email, password)
+      : await login(email, password);
+    setAuth(data.user, data.token);
+    toast.success(
+      isRegister
+        ? `Welcome to CollegeHub, ${data.user.name}!`
+        : `Welcome back, ${data.user.name}!`
+    );
+    router.push('/colleges');
+  } catch (e: any) {
+    const msg = e.response?.data?.error || 'Something went wrong';
+    setError(msg);
+    toast.error(msg);
+  }
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">

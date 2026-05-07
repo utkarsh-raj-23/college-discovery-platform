@@ -1,4 +1,5 @@
 'use client';
+import toast from 'react-hot-toast';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
 import { useCompareStore } from '@/store/compareStore';
@@ -10,6 +11,7 @@ import {
   Bookmark,
   LogOut,
   LogIn,
+  Compass,
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -54,6 +56,13 @@ export default function Navbar() {
               Predict
             </Link>
             <Link
+              href="/finder"
+              className="hover:text-blue-600 transition-colors flex items-center gap-1"
+            >
+              <Compass size={16} />
+              Finder
+            </Link>
+            <Link
               href="/qa"
               className="hover:text-blue-600 transition-colors flex items-center gap-1"
             >
@@ -73,7 +82,10 @@ export default function Navbar() {
                   Hi, {user.name.split(' ')[0]}
                 </span>
                 <button
-                  onClick={logout}
+                  onClick={() => {
+                    logout();
+                    toast.success('Logged out successfully');
+                  }}
                   className="hover:text-red-500 transition-colors"
                 >
                   <LogOut size={18} />

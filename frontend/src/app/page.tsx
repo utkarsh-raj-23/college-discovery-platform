@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Search, BarChart2, Zap, MessageCircle } from 'lucide-react';
+import { Search, BarChart2, Zap, MessageCircle, Compass } from 'lucide-react';
 
 export default function Home() {
   const features = [
@@ -31,6 +31,13 @@ export default function Home() {
       href: '/qa',
       color: 'green',
     },
+    {
+      icon: Compass,
+      title: 'College Finder',
+      desc: 'Answer 5 questions and get personalized college recommendations',
+      href: '/finder',
+      color: 'blue',
+    },
   ];
 
   return (
@@ -57,6 +64,12 @@ export default function Home() {
               className="border-2 border-white text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors"
             >
               Predict My College
+            </Link>
+            <Link
+              href="/finder"
+              className="bg-white text-blue-600 font-semibold px-8 py-3 rounded-xl hover:bg-blue-50 transition-colors"
+            >
+              Find My College
             </Link>
           </div>
         </div>

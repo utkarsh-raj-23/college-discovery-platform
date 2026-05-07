@@ -1,4 +1,5 @@
 'use client';
+import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchQuestions, postQuestion, postAnswer } from '@/lib/api';
@@ -27,23 +28,31 @@ export default function QAPage() {
   });
 
   const askMutation = useMutation({
-    mutationFn: () => postQuestion({ title, body }),
-    onSuccess: () => {
-      setTitle('');
-      setBody('');
-      setShowForm(false);
-      qc.invalidateQueries({ queryKey: ['questions'] });
-    },
-  });
+  mutationFn: () => postQuestion({ title, body }),
+  onSuccess: () => {
+    setTitle('');
+    setBody('');
+    setShowForm(false);
+    qc.invalidateQueries({ queryKey: ['questions'] });
+    toast.success('Question posted successfully');
+  },
+  onError: () => {
+    toast.error('Failed to post question. Try again.');
+  },
+});
 
   const answerMutation = useMutation({
-    mutationFn: ({ qId, text }: { qId: number; text: string }) =>
-      postAnswer(qId, text),
-    onSuccess: (_, { qId }) => {
-      setAnswerTexts((prev) => ({ ...prev, [qId]: '' }));
-      qc.invalidateQueries({ queryKey: ['questions'] });
-    },
-  });
+  mutationFn: ({ qId, text }: { qId: number; text: string }) =>
+    postAnswer(qId, text),
+  onSuccess: (_, { qId }) => {
+    setAnswerTexts((prev) => ({ ...prev, [qId]: '' }));
+    qc.invalidateQueries({ queryKey: ['questions'] });
+    toast.success('Answer posted successfully');
+  },
+  onError: () => {
+    toast.error('Failed to post answer. Try again.');
+  },
+});
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">

@@ -1,4 +1,5 @@
 'use client';
+import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCollege, saveCollege, unsaveCollege } from '@/lib/api';
 import {
@@ -43,16 +44,25 @@ export default function CollegeDetailPage({
       <div className="p-8 text-center text-gray-500">College not found</div>
     );
 
-  const handleSave = async () => {
-    if (!token) return alert('Please login to save colleges');
+const handleSave = async () => {
+  if (!token) {
+    toast.error('Please login to save colleges');
+    return;
+  }
+  try {
     if (saved) {
       await unsaveCollege(college.id);
       setSaved(false);
+      toast.success(`${college.name} removed from saved`);
     } else {
       await saveCollege(college.id);
       setSaved(true);
+      toast.success(`${college.name} saved successfully`);
     }
-  };
+  } catch {
+    toast.error('Something went wrong. Try again.');
+  }
+};
 
   const latestPlacement = college.placements?.[0];
 
